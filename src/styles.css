@@ -154,7 +154,7 @@ ul li.line-through {
 }
 #delete-btn:hover,
 #edit-btn:hover,
-#save-btn:hover:enabled,
+#save-btn:hover,
 #cancel-btn:hover {
   background-color: #36bcbf;
   color: #fff;

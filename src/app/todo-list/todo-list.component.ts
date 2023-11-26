@@ -44,7 +44,8 @@ export class TodoListComponent {
   removeToDoTask(id: string) {
     this.todoService.deleteTask(id);
   }
-
+  
+  //Edit an existing task
   editTask(id: string) {
     const taskIndex = this.taskList.findIndex((task) => task.id === id);
     if (taskIndex !== -1) {
@@ -53,16 +54,20 @@ export class TodoListComponent {
     }
   }
 
+  //Save edited task to database
   saveEditedTask(item: any, updatedTask: HTMLInputElement) {
+    //if there is updated task and value != 0, save it database
     if (updatedTask && updatedTask.value.trim() !== '') {
       this.todoService.changeTask(item.id, updatedTask.value);
       item.isEditing = false;
     } else {
+      //disable save button
       item.isSaveDisabled = true;
     }
 
   }
 
+  //Cancel editting a task
   cancelEditTask(id: string) {
     const taskIndex = this.taskList.findIndex((task) => task.id === id);
     if (taskIndex !== -1) {
