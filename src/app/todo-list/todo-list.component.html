@@ -35,19 +35,48 @@
             }"
             (click)="changeTaskStatus(item.id, !item.isCompleted)"
           ></i>
-          {{ item.task }}
+
+          <!-- EDITING TASK -->
+          <div *ngIf="item.isEditing">
+            <input
+              type="text"
+              id="update-input-box"
+              [(ngModel)]="item.updatedTask"
+              #updatedTask
+            />
+            <i
+              class="fa-solid fa-xmark fa-sm"
+              id="cancel-btn"
+              (click)="cancelEditTask(item.id)"
+            ></i>
+            <i
+              class="fa-solid fa-check fa-sm"
+              id="save-btn"
+              *ngIf="item.isEditing"
+              [ngClass]="{'disabled': item.isSaveDisabled}"
+              (click)="saveEditedTask(item, updatedTask)"
+            ></i>
+          </div>
+
+          <!-- NOT EDITING TASK -->
+
+          <span *ngIf="!item.isEditing" id="items">{{ item.task }}</span>
+
           <i
             class="fa-solid fa-xmark fa-sm"
             id="delete-btn"
+            *ngIf="!item.isEditing"
             (click)="removeToDoTask(item.id)"
           ></i>
           <i
             class="fa-solid fa-pen fa-xs"
             id="edit-btn"
+            *ngIf="!item.isEditing"
             (click)="editTask(item.id)"
           ></i>
         </li>
       </ul>
+      <a>{{ taskList.length }} tasks remaining</a>
     </div>
   </div>
 </body>

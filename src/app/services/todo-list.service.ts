@@ -31,6 +31,10 @@ export class TodoListService {
     this.firestoreCollection.doc(taskId).update({ isCompleted: newStatus });
   }
 
+  changeTask(taskId: string, updatedTask: string) {
+    this.firestoreCollection.doc(taskId).update({ task: updatedTask });
+  }
+
   deleteTask(taskId: string) {
     this.firestoreCollection.doc(taskId).delete();
   }

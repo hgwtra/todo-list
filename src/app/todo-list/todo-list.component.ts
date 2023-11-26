@@ -9,6 +9,8 @@ import { TodoListService } from '../services/todo-list.service';
 export class TodoListComponent {
   taskList: any[] = [];
 
+
+
   constructor(private todoService: TodoListService) {}
 
   ngOnInit(): void {
@@ -43,5 +45,28 @@ export class TodoListComponent {
     this.todoService.deleteTask(id);
   }
 
-  editTask(id: string) {}
+  editTask(id: string) {
+    const taskIndex = this.taskList.findIndex((task) => task.id === id);
+    if (taskIndex !== -1) {
+      this.taskList[taskIndex].isEditing = true;
+      this.taskList[taskIndex].updatedTask = this.taskList[taskIndex].task; // Initialize the updated task with the current task
+    }
+  }
+
+  saveEditedTask(item: any, updatedTask: HTMLInputElement) {
+    if (updatedTask && updatedTask.value.trim() !== '') {
+      this.todoService.changeTask(item.id, updatedTask.value);
+      item.isEditing = false;
+    } else {
+      item.isSaveDisabled = true;
+    }
+
+  }
+
+  cancelEditTask(id: string) {
+    const taskIndex = this.taskList.findIndex((task) => task.id === id);
+    if (taskIndex !== -1) {
+      this.taskList[taskIndex].isEditing = false;
+    }
+  }
 }
