@@ -10,9 +10,9 @@
   <div class="container">
     <div class="todo-app">
       <div class="app-title">
-        <h2>To-do app</h2>
-        <i class="fa-solid fa-book-bookmark"></i>
+        <h2>To-do</h2>
       </div>
+
       <div class="row">
         <input
           type="text"
@@ -22,19 +22,30 @@
         />
         <button (click)="addToDoTask(taskInput)">Add</button>
       </div>
+
       <ul id="list-container">
-        <li *ngFor="let item of taskList">
+        <li
+          *ngFor="let item of taskList"
+          [ngClass]="{ 'line-through': item.isCompleted }"
+        >
           <i
-            class="check-box"
+            [ngClass]="{
+              'check-box': !item.isCompleted,
+              'check-box-done': item.isCompleted
+            }"
             (click)="changeTaskStatus(item.id, !item.isCompleted)"
-            *ngIf="!item.isCompleted"
-          ></i>
-          <i
-            class="check-box-done"
-            (click)="changeTaskStatus(item.id, !item.isCompleted)"
-            *ngIf="item.isCompleted"
           ></i>
           {{ item.task }}
+          <i
+            class="fa-solid fa-xmark fa-sm"
+            id="delete-btn"
+            (click)="removeToDoTask(item.id)"
+          ></i>
+          <i
+            class="fa-solid fa-pen fa-xs"
+            id="edit-btn"
+            (click)="editTask(item.id)"
+          ></i>
         </li>
       </ul>
     </div>
